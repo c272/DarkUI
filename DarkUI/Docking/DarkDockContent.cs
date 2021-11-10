@@ -12,6 +12,10 @@ namespace DarkUI.Docking
 
         public event EventHandler DockTextChanged;
 
+        //Event for when the content is closed.
+        public delegate void OnContentClosedHandler();
+        public event OnContentClosedHandler OnContentClosed;
+
         #endregion
 
         #region Field Region
@@ -115,7 +119,10 @@ namespace DarkUI.Docking
             ContentClosing();
 
             if (DockPanel != null && Closing)
+            {
                 DockPanel.RemoveContent(this);
+                OnContentClosed?.Invoke();
+            }
         }
 
         public virtual void ContentClosing() { }
