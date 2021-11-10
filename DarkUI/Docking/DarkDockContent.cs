@@ -82,6 +82,19 @@ namespace DarkUI.Docking
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int Order { get; set; }
 
+        //Whether we're currently closing or not.
+        public bool Closing
+        {
+            get { return closing; }
+            set
+            {
+                closing = value;
+                if (value)
+                    Close();
+            }
+        }
+        bool closing = false;
+
         #endregion
 
         #region Constructor Region
@@ -97,9 +110,15 @@ namespace DarkUI.Docking
 
         public virtual void Close()
         {
-            if (DockPanel != null)
+            //Call closing method.
+            closing = true;
+            ContentClosing();
+
+            if (DockPanel != null && Closing)
                 DockPanel.RemoveContent(this);
         }
+
+        public virtual void ContentClosing() { }
 
         #endregion
 
