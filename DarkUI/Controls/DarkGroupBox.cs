@@ -22,6 +22,12 @@ namespace DarkUI.Controls
             }
         }
 
+        /// <summary>
+        /// The rectangle that the title of the group box is drawn to,
+        /// for utility purposes.
+        /// </summary>
+        public Rectangle TitleRect { get; private set; }
+
         public DarkGroupBox()
         {
             SetStyle(ControlStyles.OptimizedDoubleBuffer |
@@ -53,14 +59,14 @@ namespace DarkUI.Controls
                 g.DrawRectangle(p, borderRect);
             }
 
-            var textRect = new Rectangle(rect.Left + ThemeProvider.Theme.Sizes.Padding,
+            TitleRect = new Rectangle(rect.Left + ThemeProvider.Theme.Sizes.Padding,
                     rect.Top,
                     rect.Width - (ThemeProvider.Theme.Sizes.Padding * 2),
                     (int)stringSize.Height);
 
             using (var b2 = new SolidBrush(fillColor))
             {
-                var modRect = new Rectangle(textRect.Left, textRect.Top, Math.Min(textRect.Width, (int)stringSize.Width), textRect.Height);
+                var modRect = new Rectangle(TitleRect.Left, TitleRect.Top, Math.Min(TitleRect.Width, (int)stringSize.Width), TitleRect.Height);
                 g.FillRectangle(b2, modRect);
             }
 
@@ -74,7 +80,7 @@ namespace DarkUI.Controls
                     Trimming = StringTrimming.EllipsisCharacter
                 };
 
-                g.DrawString(Text, Font, b, textRect, stringFormat);
+                g.DrawString(Text, Font, b, TitleRect, stringFormat);
             }
         }
     }
