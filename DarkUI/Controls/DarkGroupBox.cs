@@ -30,6 +30,7 @@ namespace DarkUI.Controls
 
             ResizeRedraw = true;
             DoubleBuffered = true;
+            this.ForeColor = ThemeProvider.Theme.Colors.LightText;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -38,7 +39,7 @@ namespace DarkUI.Controls
             var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
             var stringSize = g.MeasureString(Text, Font);
 
-            var textColor = ThemeProvider.Theme.Colors.LightText;
+            var textColor = this.ForeColor;
             var fillColor = ThemeProvider.Theme.Colors.GreyBackground;
 
             using (var b = new SolidBrush(fillColor))
