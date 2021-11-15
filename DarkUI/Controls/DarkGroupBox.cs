@@ -59,14 +59,15 @@ namespace DarkUI.Controls
                 g.DrawRectangle(p, borderRect);
             }
 
-            TitleRect = new Rectangle(rect.Left + ThemeProvider.Theme.Sizes.Padding,
+            var titleRect = new Rectangle(rect.Left + ThemeProvider.Theme.Sizes.Padding,
                     rect.Top,
                     rect.Width - (ThemeProvider.Theme.Sizes.Padding * 2),
                     (int)stringSize.Height);
+            TitleRect = new Rectangle(titleRect.Location, new Size((int)stringSize.Width + ThemeProvider.Theme.Sizes.Padding, (int)stringSize.Height));
 
             using (var b2 = new SolidBrush(fillColor))
             {
-                var modRect = new Rectangle(TitleRect.Left, TitleRect.Top, Math.Min(TitleRect.Width, (int)stringSize.Width), TitleRect.Height);
+                var modRect = new Rectangle(titleRect.Left, titleRect.Top, Math.Min(titleRect.Width, (int)stringSize.Width), titleRect.Height);
                 g.FillRectangle(b2, modRect);
             }
 
@@ -80,7 +81,7 @@ namespace DarkUI.Controls
                     Trimming = StringTrimming.EllipsisCharacter
                 };
 
-                g.DrawString(Text, Font, b, TitleRect, stringFormat);
+                g.DrawString(Text, Font, b, titleRect, stringFormat);
             }
         }
     }
