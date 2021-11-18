@@ -16,6 +16,10 @@ namespace DarkUI.Docking
         public delegate void OnContentClosedHandler();
         public event OnContentClosedHandler OnContentClosed;
 
+        //Event for when the dock panel on this content is changed.
+        public delegate void OnDockPanelChangedHandler(DarkDockPanel panel);
+        public event OnDockPanelChangedHandler OnDockPanelChanged;
+
         #endregion
 
         #region Field Region
@@ -68,7 +72,16 @@ namespace DarkUI.Docking
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public DarkDockPanel DockPanel { get; internal set; }
+        public DarkDockPanel DockPanel 
+        { 
+            get { return dockPanel; }
+            internal set
+            {
+                dockPanel = value;
+                OnDockPanelChanged?.Invoke(value);
+            }
+        }
+        private DarkDockPanel dockPanel;
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -118,6 +131,15 @@ namespace DarkUI.Docking
             closing = true;
             ContentClosing();
 
+            //Remove ourselves from the dock group first, if we have one.
+            if (DockGroup != null && Closing)
+            {
+                DockGroup.RemoveContent(this);
+                OnContentClosed?.Invoke();
+                return;
+            }
+
+            //Otherwise, remove ourselves from the dock panel.
             if (DockPanel != null && Closing)
             {
                 DockPanel.RemoveContent(this);
