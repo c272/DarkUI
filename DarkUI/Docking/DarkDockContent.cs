@@ -131,15 +131,7 @@ namespace DarkUI.Docking
             closing = true;
             ContentClosing();
 
-            //Remove ourselves from the dock group first, if we have one.
-            if (DockGroup != null && Closing)
-            {
-                DockGroup.RemoveContent(this);
-                OnContentClosed?.Invoke();
-                return;
-            }
-
-            //Otherwise, remove ourselves from the dock panel.
+            //Remove ourselves from the dock panel.
             if (DockPanel != null && Closing)
             {
                 DockPanel.RemoveContent(this);
