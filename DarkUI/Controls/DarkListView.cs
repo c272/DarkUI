@@ -23,8 +23,6 @@ namespace DarkUI.Controls
         private int _itemHeight = 20;
         private bool _multiSelect;
 
-        private readonly int _iconSize = 16;
-
         private ObservableCollection<DarkListItem> _items;
         private List<int> _selectedIndices;
         private int _anchoredItemStart = -1;
@@ -71,6 +69,20 @@ namespace DarkUI.Controls
                 UpdateListBox();
             }
         }
+
+        [Category("Appearance")]
+        [Description("Determines the size of the icons within each item.")]
+        [DefaultValue(16)]
+        public int IconSize
+        {
+            get { return _iconSize; }
+            set
+            {
+                _iconSize = value;
+                UpdateListBox();
+            }
+        }
+        private int _iconSize = 16;
 
         [Category("Behaviour")]
         [Description("Determines whether multiple list view items can be selected at once.")]
@@ -536,7 +548,9 @@ namespace DarkUI.Controls
                 // Icon
                 if (ShowIcons && Items[i].Icon != null)
                 {
-                    g.DrawImageUnscaled(Items[i].Icon, new Point(rect.Left + 5, rect.Top + (rect.Height / 2) - (_iconSize / 2)));
+                    var topLeft = new Point(rect.Left + 5, rect.Top + (rect.Height / 2) - (_iconSize / 2));
+                    var iconRect = new Rectangle(topLeft, new Size(_iconSize, _iconSize));
+                    g.DrawImage(Items[i].Icon, iconRect);
                 }
 
                 // Text
