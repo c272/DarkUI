@@ -1149,16 +1149,16 @@ namespace DarkUI.Controls
             {
                 if (node == dropNode)
                 {
-                    if (isMoving)
-                        DarkMessageBox.ShowError($"Cannot move {node.Text}. The destination folder is the same as the source folder.", Application.ProductName);
+                    //if (isMoving)
+                    //    DarkMessageBox.ShowError($"Cannot move {node.Text}. The destination folder is the same as the source folder.", Application.ProductName);
 
                     return false;
                 }
 
                 if (node.ParentNode != null && node.ParentNode == dropNode)
                 {
-                    if (isMoving)
-                        DarkMessageBox.ShowError($"Cannot move {node.Text}. The destination folder is the same as the source folder.", Application.ProductName);
+                    //if (isMoving)
+                    //    DarkMessageBox.ShowError($"Cannot move {node.Text}. The destination folder is the same as the source folder.", Application.ProductName);
 
                     return false;
                 }
