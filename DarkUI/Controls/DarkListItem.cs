@@ -34,6 +34,8 @@ namespace DarkUI.Controls
 
         public Rectangle Area { get; set; }
 
+        public Rectangle TextArea { get; set; }
+
         //public Color TextColor { get; set; }
 
         public FontStyle FontStyle { get; set; }

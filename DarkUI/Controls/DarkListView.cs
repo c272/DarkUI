@@ -569,6 +569,8 @@ namespace DarkUI.Controls
                     if (ShowIcons)
                         modRect.X += _iconSize + 8;
 
+                    //Update icon location, draw.
+                    Items[i].TextArea = modRect;
                     g.DrawString(Items[i].Text, modFont, b, modRect, stringFormat);
                 }
             }
