@@ -16,6 +16,10 @@ namespace DarkUI.Controls
 
         public event EventHandler SelectedIndicesChanged;
 
+        //Event for when the background of the DarkListView is clicked.
+        public delegate void OnBackgroundClickedHandler();
+        public event OnBackgroundClickedHandler OnBackgroundClicked;
+
         #endregion
 
         #region Field Region
@@ -192,12 +196,14 @@ namespace DarkUI.Controls
             var bottom = range.Max();
             var width = Math.Max(ContentSize.Width, Viewport.Width);
 
+            bool clickingItem = false;
             for (var i = top; i <= bottom; i++)
             {
                 var rect = new Rectangle(0, i * ItemHeight, width, ItemHeight);
 
                 if (rect.Contains(pos))
                 {
+                    clickingItem = true;
                     if (MultiSelect && ModifierKeys == Keys.Shift)
                         SelectAnchoredRange(i);
                     else if (MultiSelect && ModifierKeys == Keys.Control)
@@ -206,6 +212,10 @@ namespace DarkUI.Controls
                         SelectItem(i);
                 }
             }
+
+            //Trigger background click if no item was pressed.
+            if (!clickingItem && e.Button == MouseButtons.Left)
+                OnBackgroundClicked?.Invoke();
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
